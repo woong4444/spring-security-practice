@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 //IoC(Inversion on Control) 제어의 역전
 @Controller
 public class QuizController {
@@ -60,5 +63,18 @@ public class QuizController {
         double meterHeight =  height/100;
         double bmi =  weight / (meterHeight*meterHeight);
         return String.format("BMI : %.2f",bmi);
+    }
+    @GetMapping("/user-info")
+    @ResponseBody
+    public Map<String,Object> userInfo(
+            @RequestParam(name="userId",required = true) String userId,
+            @RequestParam(name="userName",required = true) String userName,
+            @RequestParam(name="age",required = true) int age
+    ) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId",userId);
+        map.put("userName",userName);
+        map.put("age",age);
+        return map;
     }
 }
