@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: todo
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
