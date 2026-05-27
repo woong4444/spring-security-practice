@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>오늘의 할 일</title>
+</head>
+<body>
+    <h1>오늘의 할 일</h1>
+    <div class="list">
+        <ul>
+            <li th:each="item:${todoList}">
+                <span th:text="${item}"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="input-box">
+        <form method="post" action="/write">
+            <input type="text" name="todo" placeholder="할 일을 입력하세요.">
+            <button>등록</button>
+        </form>
+    </div>
+</body>
+</html>
