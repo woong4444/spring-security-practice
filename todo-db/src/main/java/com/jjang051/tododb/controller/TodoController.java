@@ -4,6 +4,8 @@ import com.jjang051.tododb.dto.Todo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.*;
@@ -60,6 +62,24 @@ public class TodoController {
         }
         model.addAttribute("todoList",todoList);
         return "list";
+    }
+
+    @PostMapping("/write")
+    public String write(@RequestParam(name="todo",required = true) String todo) {
+        String url = "jdbc:oracle:thin:@localhost:1521:xe";
+        String username = "spring";
+        String password = "1234";
+        String sql = "INSERT INTO todo (NO,content,complete) VALUES (todo_seq.nextval,?,'N')";
+        try {
+            Connection conn = DriverManager.getConnection(url,username,password);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,todo);
+            int result = pstmt.executeUpdate();
+            System.out.println("result==="+result);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/list";
     }
 
 }

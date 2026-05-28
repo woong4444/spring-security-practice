@@ -13,5 +13,11 @@
         <span th:text="${item.complete}">N</span>
     </li>
 </ul>
+<div>
+    <form action="/write" method="post">
+        <div><input type="text" placeholder="할 일을 입력하세요." name="todo"></div>
+        <div><button>해야할 일</button></div>
+    </form>
+</div>
 </body>
 </html>
