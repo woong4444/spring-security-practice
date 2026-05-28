@@ -45,6 +45,7 @@ public class TodoController {
         String sql = "select * from todo";
         List<Todo> todoList = new ArrayList<>();
         try {
+            //sql injection 방지하기 위해서 prepareStatement
             Connection conn = DriverManager.getConnection(url,username,password);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs  = pstmt.executeQuery();
@@ -110,6 +111,22 @@ public class TodoController {
             pstmt.setInt(1,index);
             int result = pstmt.executeUpdate();
             System.out.println("result==="+result);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/list";
+    }
+    @PostMapping("/delete-unsafe")
+    public String deleteUnsafe(@RequestParam(name="index", required = true) String index) {
+        String url = "jdbc:oracle:thin:@localhost:1521:xe";
+        String username = "spring";
+        String password = "1234";
+        String sql = "DELETE FROM  todo WHERE NO="+index;
+        try {
+            Connection conn = DriverManager.getConnection(url,username,password);
+            Statement stmt = conn.createStatement();
+            int result = stmt.executeUpdate(sql);
+            System.out.println(result+"개 삭제");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

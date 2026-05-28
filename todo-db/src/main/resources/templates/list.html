@@ -39,6 +39,10 @@
                             <input type="hidden" name="index" th:value="${item.no}">
                             <button class="btn btn-sm btn-error">삭제</button>
                         </form>
+                        <form action="/delete-unsafe" method="post">
+                            <input type="text" name="index">
+                            <button class="btn btn-sm btn-error">해킹 위험 삭제</button>
+                        </form>
                     </div>
                 </li>
             </ul>
