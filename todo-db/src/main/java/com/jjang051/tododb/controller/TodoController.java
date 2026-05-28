@@ -98,4 +98,21 @@ public class TodoController {
         }
         return "redirect:/list";
     }
+    @PostMapping("/delete")
+    public String delete(@RequestParam(name="index", required = true) int index) {
+        String url = "jdbc:oracle:thin:@localhost:1521:xe";
+        String username = "spring";
+        String password = "1234";
+        String sql = "DELETE FROM  todo WHERE NO=?";
+        try {
+            Connection conn = DriverManager.getConnection(url,username,password);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,index);
+            int result = pstmt.executeUpdate();
+            System.out.println("result==="+result);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/list";
+    }
 }

@@ -1,32 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>오늘의 할 일</h1>
-<ul>
-    <li th:each="item:${todoList}">
-        <span th:text="${item.no}">1</span>
-        <span th:text="${item.content}">점심먹기</span>
-        <span th:text="${item.complete}">N</span>
-        <form action="/complete" method="post">
-            <input type="hidden" name="index" th:value="${item.no}">
-            <button>완료</button>
-        </form>
-        <form action="/delete" method="post">
-            <input type="hidden" name="index" th:value="${item.no}">
-            <button>삭제</button>
-        </form>
+    <title>오늘의 할 일</title>
 
-    </li>
-</ul>
-<div>
-    <form action="/write" method="post">
-        <div><input type="text" placeholder="할 일을 입력하세요." name="todo"></div>
-        <div><button>해야할 일</button></div>
-    </form>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-base-200 min-h-screen">
+
+<div class="max-w-xl mx-auto p-6">
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h1 class="card-title text-2xl mb-4">오늘의 할 일</h1>
+
+            <ul class="space-y-2">
+                <li th:each="item:${todoList}"
+                    class="flex items-center justify-between gap-3 p-3 bg-base-200 rounded-lg">
+
+                    <div class="flex items-center gap-3">
+                        <span class="badge badge-neutral" th:text="${item.no}">1</span>
+
+                        <span th:text="${item.content}"
+                              th:classappend="${item.complete} == 'Y' ? 'line-through text-gray-400' : ''">
+                            점심먹기
+                        </span>
+
+                        <span class="badge badge-outline" th:text="${item.complete}">N</span>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <form action="/complete" method="post">
+                            <input type="hidden" name="index" th:value="${item.no}">
+                            <button class="btn btn-sm btn-success">완료</button>
+                        </form>
+
+                        <form action="/delete" method="post">
+                            <input type="hidden" name="index" th:value="${item.no}">
+                            <button class="btn btn-sm btn-error">삭제</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <form action="/write" method="post" class="flex gap-2">
+                <input type="text"
+                       placeholder="할 일을 입력하세요."
+                       name="todo"
+                       class="input input-bordered flex-1">
+
+                <button class="btn btn-primary">등록</button>
+            </form>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>
