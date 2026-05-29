@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-base-200 min-h-screen p-6">
+
+<div class="max-w-5xl mx-auto">
+
+    <!-- 제목 영역 -->
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-4xl font-bold text-black">
+            게시글 목록
+        </h1>
+
+        <a href="/board/write" class="btn btn-primary">
+            글쓰기
+        </a>
+    </div>
+
+    <!-- 게시판 -->
+    <ul class="space-y-3">
+
+        <!-- 헤더 -->
+        <li class="bg-base-300 rounded-xl p-4 font-bold text-black shadow-sm">
+            <div class="grid grid-cols-[80px_1fr_120px] items-center">
+                <span>번호</span>
+                <span>제목</span>
+                <span>작성자</span>
+            </div>
+        </li>
+
+        <!-- 게시글 1 -->
+        <li th:each="item:${boardList}"
+                class="bg-white rounded-xl shadow-sm hover:shadow-md transition">
+            <a href="#" class="grid grid-cols-[80px_1fr_120px] items-center p-4">
+                <span th:text="${item.no}">1</span>
+                <span th:text="${item.title}">스프링부트 게시판 만들기</span>
+                <span th:text="${item.nickname}">장성호</span>
+            </a>
+        </li>
+
+
+
+    </ul>
+
+</div>
+
+</body>
+</html>

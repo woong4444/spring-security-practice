@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class BoardDto {
     private int no;
     private String title;
