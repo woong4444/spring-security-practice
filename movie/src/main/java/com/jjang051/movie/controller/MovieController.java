@@ -3,10 +3,7 @@ package com.jjang051.movie.controller;
 import com.jjang051.movie.dto.MovieDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -55,11 +52,54 @@ public class MovieController {
         return "list";
     }
     @PostMapping("/write")
-    public String write() {
-        return "redirect:/list";
+    public String write(@RequestParam(name="title", required = true) String title) {
+        String sql = "INSERT INTO movie VALUES (movie_seq.nextval,?,'N')";
+        Connection conn = null;
+//        if(title==null || title.trim().isEmpty()){
+//            return """
+//                    <script>
+//                        alert('영화제목을 입력하세요.');
+//                        location.href='/movie/list';
+//                    </script>
+//                    """;
+//        }
+        try {
+            //공백 또는 안쓰고 넘어온거 경고창 띄우기
+            conn = DriverManager.getConnection(url,username,password);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,title);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/movie/list";
     }
     @PostMapping("/reserve")
-    public String reserve() {
-        return "redirect:/list";
+    public String reserve(@RequestParam(name="no", required = true) int no) {
+        String sql = "UPDATE movie SET reserve_yn = 'Y' where no = ?";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url,username,password);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,no);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/movie/list";
+    }
+    @PostMapping("/delete")
+    public String delete(@RequestParam(name="no", required = true) int no) {
+        String sql = "DELETE FROM movie where no = ?";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url,username,password);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,no);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/movie/list";
     }
 }
