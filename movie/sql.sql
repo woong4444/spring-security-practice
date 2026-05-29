@@ -52,4 +52,16 @@ DELETE FROM movie WHERE NO = 1;
 ROLLBACK;
 
 
+DROP TABLE board;
+CREATE TABLE board(
+	NO NUMBER CONSTRAINT board_no_pk PRIMARY KEY,
+	title varchar2(300) CONSTRAINT board_title_nn NOT NULL ,
+	nickname varchar2(300) CONSTRAINT board_nickname_nn NOT NULL,
+	content clob  CONSTRAINT board_content_nn NOT NULL ,
+	hit NUMBER DEFAULT 0,
+	regdate DATE DEFAULT sysdate 
+);
+
+
+
 

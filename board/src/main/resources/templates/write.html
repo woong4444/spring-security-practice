@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 작성</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-base-200 min-h-screen flex items-center justify-center">
+
+<div class="card w-full max-w-2xl bg-base-100 shadow-xl">
+    <div class="card-body">
+        <h2 class="card-title text-3xl mb-4">게시글 작성</h2>
+
+        <form action="/board/write" method="post">
+
+            <!-- 제목 -->
+            <div class="form-control mb-4">
+                <label class="label">
+                    <span class="label-text font-bold">제목</span>
+                </label>
+                <input
+                        type="text"
+                        name="title"
+                        placeholder="제목을 입력하세요"
+                        class="input input-bordered w-full"
+                        required>
+            </div>
+
+            <!-- 작성자 -->
+            <div class="form-control mb-4">
+                <label class="label">
+                    <span class="label-text font-bold">닉네임</span>
+                </label>
+                <input
+                        type="text"
+                        name="nickname"
+                        placeholder="닉네임을 입력하세요"
+                        class="input input-bordered w-full"
+                        required>
+            </div>
+
+            <!-- 내용 -->
+            <div class="form-control mb-6">
+                <label class="label">
+                    <span class="label-text font-bold">내용</span>
+                </label>
+                <textarea
+                        name="content"
+                        rows="10"
+                        placeholder="내용을 입력하세요"
+                        class="textarea textarea-bordered w-full"
+                        required></textarea>
+            </div>
+
+            <div class="card-actions justify-end">
+                <button type="reset" class="btn btn-outline">
+                    취소
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    등록
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
