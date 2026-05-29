@@ -62,6 +62,11 @@ CREATE TABLE board(
 	regdate DATE DEFAULT sysdate 
 );
 
-
+CREATE SEQUENCE board_seq
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 99999999999
+nocache
+nocycle;
 
 
