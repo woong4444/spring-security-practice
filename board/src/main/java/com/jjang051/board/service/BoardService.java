@@ -12,7 +12,7 @@ import java.util.List;
 public class BoardService {
     private final JdbcTemplate jdbcTemplate;
     public List<BoardDto> findAll() {
-        String sql = "SELECT * FROM board";
+        String sql = "SELECT * FROM board ORDER BY NO DESC";
         List<BoardDto> boardList = jdbcTemplate.query(sql,(rs, rownum)->
                 BoardDto.builder()
                         .no(rs.getInt("no"))
