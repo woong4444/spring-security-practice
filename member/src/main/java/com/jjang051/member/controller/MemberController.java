@@ -34,6 +34,7 @@ public class MemberController {
             bindingResult.rejectValue
                     ("email","duplicate","이미 사용중인 이메일입니다.");
         }
+
         if(bindingResult.hasErrors()) {
             return "signup";
         }
