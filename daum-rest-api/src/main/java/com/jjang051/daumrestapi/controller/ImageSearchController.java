@@ -1,10 +1,7 @@
 package com.jjang051.daumrestapi.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
 
 import java.util.HashMap;
@@ -15,6 +12,8 @@ public class ImageSearchController {
     private final RestClient restClient = RestClient.create();
     @GetMapping("/image-search")
     @ResponseBody
+    @CrossOrigin(originPatterns = {"http://127.0.0.1:5500","http://localhost:5500","http://localhost:*"})
+    //@CrossOrigin(origin = "http://127.0.0.1:5500")
     public Map<String,Object> seachImage(@RequestParam(name="query") String query) {
         return restClient
                 .get()
