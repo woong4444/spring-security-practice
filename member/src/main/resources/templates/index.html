@@ -1,21 +1,68 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MEMBER</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-<h1>MEMBER</h1>
-<!-- 1.토큰이용  jwt  리액트-->
-<!-- 2.세션이용 -->
-<div th:if="${session.loggedMemberDto == null}">
-    <a href="/member/signup">회원가입</a>
-    <a href="/member/login">로그인</a>
-</div>
-<div th:if="${session.loggedMemberDto != null}">
-    <a href="/member/info" th:text="${session.loggedMemberDto.userName}">장성호</a>
-    <a href="/member/info" th:text="${session.loggedMemberDto.userId}">장성호</a>
-    <a href="/member/info" th:text="${session.loggedMemberDto.zipcode}">장성호</a>
-</div>
+<body class="bg-base-200">
+
+<!-- HEADER -->
+<header class="navbar bg-base-100 shadow-md px-6">
+
+    <!-- 왼쪽 : 로고 -->
+    <div class="flex-1">
+        <a href="/" class="text-3xl font-bold text-primary">
+            MEMBER
+        </a>
+    </div>
+
+    <!-- 오른쪽 : 메뉴 -->
+    <div class="flex-none flex items-center gap-2">
+
+        <a href="/" class="btn btn-ghost">
+            홈
+        </a>
+
+        <a href="/board/list" class="btn btn-ghost">
+            게시판
+        </a>
+
+        <!-- 로그인 전 -->
+        <div th:if="${session.loggedMemberDto == null}" class="flex gap-2">
+            <a href="/member/signup" class="btn btn-outline btn-primary">
+                회원가입
+            </a>
+
+            <a href="/member/login" class="btn btn-primary">
+                로그인
+            </a>
+        </div>
+
+        <!-- 로그인 후 -->
+        <div th:if="${session.loggedMemberDto != null}" class="flex items-center gap-2">
+
+            <a href="/member/info"
+               class="btn btn-ghost"
+               th:text="${session.loggedMemberDto.userName}">
+                장성호
+            </a>
+
+            <a href="/member/logout"
+               class="btn btn-error text-white">
+                로그아웃
+            </a>
+        </div>
+
+    </div>
+
+</header>
+
+<main class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold">메인 페이지</h1>
+</main>
+
 </body>
 </html>

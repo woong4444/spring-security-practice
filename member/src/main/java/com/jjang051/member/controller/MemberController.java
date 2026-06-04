@@ -54,6 +54,8 @@ public class MemberController {
     public String login(@ModelAttribute LoginDto loginDto) {
         return "login";
     }
+
+    /*
     @PostMapping("/login")
     public String loginProcess(@Valid @ModelAttribute LoginDto loginDto,
                                BindingResult bindingResult,
@@ -69,6 +71,25 @@ public class MemberController {
             return "login";
         }
         MemberDto loggedMemberDto = memberService.getMemberInfo(loginDto.getUserId());
+        //이름
+        httpSession.setAttribute("loggedMemberDto",loggedMemberDto); //aaa,장성호,12133 //bbb, 장동건,32111
+        return "redirect:/";
+    }
+     */
+    @PostMapping("/login")
+    public String loginProcess(@Valid @ModelAttribute LoginDto loginDto,
+                               BindingResult bindingResult,
+                               HttpSession httpSession
+    ) {
+
+        if(bindingResult.hasErrors()) {
+            return "login";
+        }
+        MemberDto loggedMemberDto = memberService.loginCheckDto(loginDto);
+        if(loggedMemberDto==null) {
+            bindingResult.reject("loginFail","까꿍 아이디 또는 비밀번호가 일치하지 않습니다.");
+            return "login";
+        }
         //이름
         httpSession.setAttribute("loggedMemberDto",loggedMemberDto); //aaa,장성호,12133 //bbb, 장동건,32111
         return "redirect:/";
@@ -102,4 +123,9 @@ public class MemberController {
         return returnMap;
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();//session비우기...
+        return "redirect:/";
+    }
 }
