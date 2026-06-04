@@ -112,7 +112,8 @@ SELECT count(*) FROM MEMBER WHERE email= 'jjang051hta@naver.com';
 
 SELECT count(*) FROM MEMBER WHERE user_id='aaa' AND user_pw='1234';
 
-
+SELECT count(*) FROM MEMBER 
+                            WHERE user_id='jjang051';
 
 
 
