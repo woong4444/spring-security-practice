@@ -187,6 +187,19 @@
     const btnDuplicate = document.querySelector("#btn-duplicate");
     const userIdCheckMessage = document.querySelector("#userIdCheckMessage");
 
+    const btnPostcode =  document.querySelector("#btn-postcode");
+    btnPostcode.addEventListener("click", () => {
+        //console.log("클릭")
+        new kakao.Postcode({
+            oncomplete: function (data) {
+                console.log(data);
+                document.querySelector("#zipcode").value=data.zonecode;
+                document.querySelector("#address").value=data.address;
+                document.querySelector("#detailAddress").focus();
+            }
+        }).open()
+    })
+
     btnDuplicate.addEventListener("click", async () => {
         const sendUserId = document.querySelector("#userId").value;
 
