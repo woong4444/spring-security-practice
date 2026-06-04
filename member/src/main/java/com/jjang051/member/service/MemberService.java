@@ -4,6 +4,7 @@ import com.jjang051.member.dto.LoginDto;
 import com.jjang051.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,5 +56,19 @@ public class MemberService {
                      """;
         Integer count = jdbcTemplate.queryForObject(sql,Integer.class,userId);
         return count!=null && count > 0;
+    }
+
+    public MemberDto getMemberInfo(String userId) {
+        String sql = """
+                    SELECT user_id,user_name,zipcode FROM MEMBER WHERE user_id=?
+                """;
+        //RowMapper
+        return jdbcTemplate.queryForObject(sql,(rs,rownum)->
+                        MemberDto.builder()
+                                .userId(rs.getNString("user_id"))
+                                .userName(rs.getString("user_name"))
+                                .zipcode(rs.getInt("zipcode"))
+                        .build()
+                ,userId);
     }
 }

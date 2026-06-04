@@ -3,6 +3,7 @@ package com.jjang051.member.controller;
 import com.jjang051.member.dto.LoginDto;
 import com.jjang051.member.dto.MemberDto;
 import com.jjang051.member.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import java.util.Map;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+
+
 
     @GetMapping("/signup")
     public String signup(@ModelAttribute MemberDto memberDto, Model model) {
@@ -53,7 +56,9 @@ public class MemberController {
     }
     @PostMapping("/login")
     public String loginProcess(@Valid @ModelAttribute LoginDto loginDto,
-                               BindingResult bindingResult) {
+                               BindingResult bindingResult,
+                               HttpSession httpSession
+                               ) {
 
         if(bindingResult.hasErrors()) {
             return "login";
@@ -63,6 +68,9 @@ public class MemberController {
             bindingResult.reject("loginFail","까꿍 아이디 또는 비밀번호가 일치하지 않습니다.");
             return "login";
         }
+        MemberDto loggedMemberDto = memberService.getMemberInfo(loginDto.getUserId());
+        //이름
+        httpSession.setAttribute("loggedMemberDto",loggedMemberDto); //aaa,장성호,12133 //bbb, 장동건,32111
         return "redirect:/";
     }
     @GetMapping("/id-check")

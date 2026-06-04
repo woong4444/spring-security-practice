@@ -5,7 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-<h1>MEMBER</h1>
-<a href="/member/signup">회원가입</a>
+<h1>MEMBER Static</h1>
+<!-- 1.토큰이용  jwt  리액트-->
+<!-- 2.세션이용 -->
+<div>
+    <a href="/member/signup">회원가입</a>
+    <a href="/member/login">로그인</a>
+</div>
+<div>
+    <a href="/member/info" th:text="${session.loginMember}">장성호</a>
+</div>
 </body>
 </html>
