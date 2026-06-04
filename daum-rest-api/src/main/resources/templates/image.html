@@ -42,13 +42,7 @@
 
     async function searchImage(keyword) {
         const response = await fetch(
-            `https://dapi.kakao.com/v2/search/image?query=${encodeURIComponent(keyword)}`,
-            {
-                method: "GET",
-                headers: {
-                    Authorization: "KakaoAK c2b6828b16439b8dd302446432809501",
-                },
-            },
+            `/image-search?query=${keyword}`,
         );
 
         const data = await response.json();
