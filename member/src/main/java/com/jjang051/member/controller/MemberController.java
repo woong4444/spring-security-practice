@@ -128,4 +128,13 @@ public class MemberController {
         httpSession.invalidate();//session비우기...
         return "redirect:/";
     }
+
+    @GetMapping("/info")
+    public String info(HttpSession httpSession, Model model) {
+        MemberDto loggedMemberDto = (MemberDto) httpSession.getAttribute("loggedMemberDto");
+        //System.out.println("userId==="+loggedMemberDto.getUserId());
+       model.addAttribute("loggedMemberDto",
+               memberService.getMemberInfo(loggedMemberDto.getUserId()));
+        return "info";
+    }
 }

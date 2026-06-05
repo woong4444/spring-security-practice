@@ -77,7 +77,8 @@ public class MemberService {
 
     public MemberDto getMemberInfo(String userId) {
         String sql = """
-                    SELECT user_id,user_name,zipcode FROM MEMBER WHERE user_id=?
+                    SELECT user_id,user_name,zipcode,address, detail_address,regdate 
+                    FROM MEMBER WHERE user_id=?
                 """;
         //RowMapper
         return jdbcTemplate.queryForObject(sql,(rs,rownum)->
@@ -85,6 +86,9 @@ public class MemberService {
                                 .userId(rs.getNString("user_id"))
                                 .userName(rs.getString("user_name"))
                                 .zipcode(rs.getInt("zipcode"))
+                                .address(rs.getString("address"))
+                                .detailAddress(rs.getString("detail_address"))
+                                .regDate(rs.getTimestamp("regdate").toLocalDateTime())
                         .build()
                 ,userId);
     }
