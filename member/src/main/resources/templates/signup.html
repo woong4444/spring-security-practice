@@ -4,8 +4,6 @@
 <body class="bg-base-200 min-h-screen">
 <header th:replace="~{fragments/header::my-header}"></header>
 <div class="flex items-center justify-center py-10">
-
-
     <div class="card w-full max-w-lg bg-white shadow-xl">
         <div class="card-body">
             <h1 class="text-3xl font-bold text-center mb-6">회원가입</h1>
@@ -169,6 +167,23 @@
                     </p>
                 </div>
 
+                <!-- 프로필 이미지 -->
+                <div class="mb-6">
+                    <label class="label">
+                        <span class="label-text font-semibold">프로필 이미지</span>
+                    </label>
+
+                    <!-- 미리보기 -->
+                    <input type="file"
+                           name="profileImage"
+                           id="profileImage"
+                           accept="image/*"
+                           class="file-input file-input-bordered w-full"/>
+
+                    <p class="text-xs text-gray-500 mt-2">
+                        JPG, PNG, GIF 파일 업로드 가능
+                    </p>
+                </div>
                 <button type="submit" class="btn btn-primary w-full">
                     회원가입
                 </button>
