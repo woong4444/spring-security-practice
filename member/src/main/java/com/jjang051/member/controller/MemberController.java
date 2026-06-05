@@ -42,13 +42,17 @@ public class MemberController {
                     ("email","duplicate","이미 사용중인 이메일입니다.");
         }
         //비밀번화 확인 검증
+        System.out.println("여기가 안된다111");
         if(!memberDto.getUserPw().equals(memberDto.getUserPwCheck())) {
             bindingResult.rejectValue
                     ("userPwCheck","passwordMismatch","비밀번호가 일치하지 않습니다.");
         }
+        System.out.println("여기가 안된다222");
         if(bindingResult.hasErrors()) {
+            System.out.println("여기가 4444");
             return "signup";
         }
+        System.out.println("여기가 안된다333");
         memberService.signup(memberDto, profile);
         //System.out.println(memberDto.toString());
         return "redirect:/";

@@ -47,5 +47,7 @@ public class MemberDto {
 
     private String profile;
 
+    private String thumbnailProfile;
+
     private LocalDateTime regDate; // 가입일
 }
