@@ -35,11 +35,15 @@
 
         <!-- 로그인 후 -->
         <div th:if="${session.loggedMemberDto != null}" class="flex items-center gap-2">
-
+            <!--
             <a href="/member/info"
                class="btn btn-ghost"
                th:text="${session.loggedMemberDto.userName}">
                 장성호
+            </a>
+            -->
+            <a href="/member/info">
+                <img th:src="@{/upload/{file}(file=${session.loggedMemberDto.profile})}">
             </a>
 
             <a href="/member/logout"

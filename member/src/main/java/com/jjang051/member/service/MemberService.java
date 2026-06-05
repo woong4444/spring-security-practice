@@ -86,7 +86,7 @@ public class MemberService {
 
     public MemberDto loginCheckDto(LoginDto loginDto) {
         String sql = """
-                   SELECT user_id,user_name FROM MEMBER 
+                   SELECT user_id,user_name,profile FROM MEMBER 
                        WHERE user_id=? AND user_pw=?
                 """;
         try {
@@ -94,6 +94,7 @@ public class MemberService {
                             MemberDto.builder()
                                     .userId(rs.getNString("user_id"))
                                     .userName(rs.getString("user_name"))
+                                    .profile(rs.getString("profile"))
                                     .build(),
                     loginDto.getUserId(), loginDto.getUserPw());
         } catch (EmptyResultDataAccessException e) {
