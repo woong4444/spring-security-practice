@@ -137,7 +137,13 @@ CREATE TABLE new_member (
     thumbnail_profile      	VARCHAR2(300),
     regdate     DATE DEFAULT sysdate
 );
+INSERT INTO new_member values(member_seq.nextval,'aaaa','장성호','1111',
+'jjang051@hanmail.net','01011111111','장항동',11111,'111-111','aaaaa','aaaaaaaa',sysdate);
+SELECT * FROM new_MEMBER WHERE user_id='jjang051' AND user_pw ='1234';
+ROLLBACK;
 
-SELECT * FROM new_MEMBER;
 
 
+SELECT * FROM new_member;
+DELETE FROM new_member;
+COMMIT;
