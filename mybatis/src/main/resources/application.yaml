@@ -1,3 +1,18 @@
 spring:
   application:
     name: mybatis
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: spring
+    password: 1234
+  mybatis:
+    mapper-locations: classpath:mybatis/mapper/**/*.xml
+    type-aliases-package: com.jjang051.mybatis.member.dto
