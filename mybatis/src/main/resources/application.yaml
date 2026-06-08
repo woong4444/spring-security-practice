@@ -15,4 +15,4 @@ spring:
     password: 1234
   mybatis:
     mapper-locations: classpath:mybatis/mapper/**/*.xml
-    type-aliases-package: com.jjang051.mybatis.member.dto
+    type-aliases-package: com.jjang051.mybatis.member.dto,com.jjang051.mybatis.board.dto

@@ -6,5 +6,20 @@
     <select id="findAll" resultType="MemberDto">
         SELECT * FROM NEW_MEMBER
     </select>
+    <insert id="signup" parameterType="MemberDto">
+        INSERT INTO NEW_MEMBER values(member_seq.nextval,
+            #{userId},
+            #{userName},
+            #{userPw},
+            #{email},
+            #{phone},
+            #{address},
+            #{zipcode},
+            #{detailAddress},
+            #{profile},
+            #{thumbnailProfile},
+            #{regDate}
+        )
+    </insert>
 </mapper>
 
