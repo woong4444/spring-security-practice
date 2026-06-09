@@ -7,5 +7,12 @@
         INSERT INTO NEW_BOARD (no,title,content) VALUES
         (NEW_BOARD_SEQ.nextval,#{title},#{content})
     </insert>
+    <select id="viewBoard" parameterType="int" resultType="BoardDto">
+        SELECT * FROM new_board WHERE NO=#{no}
+    </select>
+    <select id="listBoard" resultType="BoardDto">
+        SELECT * FROM new_board
+    </select>
+
 </mapper>
 

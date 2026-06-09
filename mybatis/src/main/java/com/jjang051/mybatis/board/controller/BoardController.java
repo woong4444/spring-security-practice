@@ -3,8 +3,10 @@ package com.jjang051.mybatis.board.controller;
 import com.jjang051.mybatis.board.dao.BoardDao;
 import com.jjang051.mybatis.board.dto.BoardDto;
 import com.jjang051.mybatis.board.service.BoardService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,8 +30,9 @@ public class BoardController {
     public String write(@ModelAttribute BoardDto boardDto) {
         boardService.writeBoard(boardDto);
         System.out.println(boardDto.getContent());
-        return "redirect:/";
+        return "redirect:/board/list";
     }
+
 
     @PostMapping("/upload")
     @ResponseBody
@@ -47,4 +50,22 @@ public class BoardController {
         }
         return "/upload/"+fileName;
     }
+    @GetMapping("/view")
+    public String viewBoard(@RequestParam(name="no", required = true, defaultValue = "1") int no,
+                            Model model) {
+        BoardDto boardDto = boardService.viewBoard(no);
+        //System.out.println(boardDto);
+        model.addAttribute("boardDto", boardDto);
+
+        return "board/view";
+    }
+    @GetMapping("/list")
+    public String listBoard(Model model) {
+        model.addAttribute("boardList",boardService.listBoard());
+        return "board/list";
+    }
 }
+
+
+
+

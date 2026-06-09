@@ -1,50 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시글 작성</title>
+
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Toast UI Editor -->
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet"
+          href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 
 </head>
-<body>
-<form action="/board/write" method="post" id="write-form">
-    <div><input type="text" name="title"></div>
-    <div id="editor"></div>
-    <input type="hidden" name="content" id="content">
-    <div><button type="button" id="btn-confirm">등록</button></div>
-</form>
-    <script>
-        const btnConfirm =  document.querySelector("#btn-confirm");
-        const writeForm = document.querySelector("#write-form");
-        const Editor = toastui.Editor;
+<body class="bg-base-200 min-h-screen py-10">
 
-        const editor = new Editor({
-            el: document.querySelector('#editor'),
-            height: '600px',
-            initialEditType: 'wysiwyg',
-            previewStyle: 'vertical',
-            //특정이벤트가 발생했을대 내가 쓴 코드를 끼워 넣어서 실행해줘
-            // <input type="file" name="upload">
-            hooks: {
-                addImageBlobHook:async (blob,callback) => {
-                    const formData = new FormData();
-                    formData.append("upload",blob);
-                    const response = await fetch("/board/upload",{
-                        method:"post",
-                        body:formData
-                    })
-                    //console.log(response);
-                    const imageUrl = await response.text();
-                    callback(imageUrl,"업로드된 이미지");
-                }
+<div class="container mx-auto max-w-4xl px-4">
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+
+            <h1 class="text-3xl font-bold mb-6">게시글 작성</h1>
+
+            <form action="/board/write" method="post" id="write-form">
+
+                <!-- 제목 -->
+                <div class="form-control mb-5">
+                    <label class="label">
+                        <span class="label-text font-semibold">제목</span>
+                    </label>
+                    <input type="text"
+                           name="title"
+                           placeholder="제목을 입력하세요"
+                           class="input input-bordered w-full">
+                </div>
+
+                <!-- 에디터 -->
+                <div class="form-control mb-5">
+                    <label class="label">
+                        <span class="label-text font-semibold">내용</span>
+                    </label>
+                    <div id="editor"></div>
+                </div>
+
+                <!-- 실제 서버로 전송될 내용 -->
+                <input type="hidden" name="content" id="content">
+
+                <!-- 버튼 -->
+                <div class="card-actions justify-end mt-6">
+                    <a href="/board/list" class="btn btn-ghost">
+                        취소
+                    </a>
+                    <button type="button"
+                            id="btn-confirm"
+                            class="btn btn-primary">
+                        등록
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const btnConfirm = document.querySelector("#btn-confirm");
+    const writeForm = document.querySelector("#write-form");
+    const Editor = toastui.Editor;
+
+    const editor = new Editor({
+        el: document.querySelector('#editor'),
+        height: '600px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical',
+
+        hooks: {
+            addImageBlobHook: async (blob, callback) => {
+                const formData = new FormData();
+                formData.append("upload", blob);
+
+                const response = await fetch("/board/upload", {
+                    method: "post",
+                    body: formData
+                });
+
+                const imageUrl = await response.text();
+                callback(imageUrl, "업로드된 이미지");
             }
-        });
-        btnConfirm.addEventListener("click",()=>{
-            document.querySelector("#content").value=editor.getMarkdown();
-            writeForm.submit();
-        })
+        }
+    });
 
-    </script>
+    btnConfirm.addEventListener("click", () => {
+        document.querySelector("#content").value = editor.getHTML();
+        writeForm.submit();
+    });
+</script>
+
 </body>
 </html>

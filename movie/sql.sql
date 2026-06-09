@@ -165,3 +165,5 @@ SELECT * FROM new_board;
 SELECT * FROM new_member;
 DELETE FROM new_member;
 COMMIT;
+
+SELECT * FROM new_board WHERE NO=1;

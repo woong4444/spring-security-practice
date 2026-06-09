@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-base-200 min-h-screen py-10">
+
+<div class="container mx-auto max-w-5xl px-4">
+
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-3xl font-bold">
+                    게시판
+                </h1>
+
+                <a href="/board/write"
+                   class="btn btn-primary">
+                    글쓰기
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="table table-zebra">
+                    <thead>
+                    <tr>
+                        <th width="80">번호</th>
+                        <th>제목</th>
+                        <th width="180">작성일</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="item : ${boardList}">
+                        <td th:text="${item.no}"></td>
+
+                        <td>
+                            <a th:href="@{/board/view(no=${item.no})}"
+                               th:text="${item.title}"
+                               class="link link-hover font-medium">
+                            </a>
+                        </td>
+
+                        <td th:text="${item.regDate}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

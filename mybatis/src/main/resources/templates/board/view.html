@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 보기</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-base-200 min-h-screen py-10">
+
+<div class="container mx-auto max-w-4xl px-4">
+
+    <div class="card bg-base-100 shadow-xl">
+
+        <div class="card-body">
+
+            <!-- 제목 -->
+            <h1 class="card-title text-3xl font-bold"
+                th:text="${boardDto.title}">
+                게시글 제목
+            </h1>
+
+            <div class="divider"></div>
+
+            <!-- 내용 -->
+            <div class="prose max-w-none"
+                 th:utext="${boardDto.content}">
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 버튼 -->
+            <div class="card-actions justify-end">
+                <a href="/board/list"
+                   class="btn btn-primary">
+                    목록
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
