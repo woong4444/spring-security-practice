@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/member")
@@ -22,15 +24,13 @@ public class MemberController {
         System.out.println("signup");
         return "member/signup";
     }
-    @GetMapping("/login")
-    public String login() {
-        return "member/login";
-    }
+
 
     @PostMapping("/signup")
-    public String signupProcess(@ModelAttribute SignupDto signupDto) {
+    public String signupProcess(@ModelAttribute SignupDto signupDto, RedirectAttributes redirectAttributes) {
         memberService.signup(signupDto);
-        return "redirect:/member/login";
+        redirectAttributes.addFlashAttribute("toastMessage","회원가입이 되었습니다.");
+        return "redirect:/member/login"; //링크
     }
 
     @GetMapping("/modify")

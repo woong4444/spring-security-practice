@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>로그인</h1>
-<form method="post" action="/member/login">
+<form method="post" action="/member/login" th:action="@{/member/login}">
     <div>
         <label>아이디</label><input name="userId" id="userId">
     </div>
@@ -19,5 +19,8 @@
         <button>login</button>
     </div>
 </form>
+<div th:if="${toastMessage}">
+    <span th:text="${toastMessage}"></span>
+</div>
 </body>
 </html>
