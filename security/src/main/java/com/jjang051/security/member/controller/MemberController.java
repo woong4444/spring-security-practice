@@ -1,6 +1,8 @@
 package com.jjang051.security.member.controller;
 
+import com.jjang051.security.member.dao.MemberDao;
 import com.jjang051.security.member.dto.SignupDto;
+import com.jjang051.security.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final PasswordEncoder passwordEncoder;
+
+    private final MemberService memberService;
 
     @GetMapping("/signup")
     public String signup() {
@@ -25,15 +28,8 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    @ResponseBody
     public String signupProcess(@ModelAttribute SignupDto signupDto) {
-        System.out.println("signupProcess");
-        SignupDto encodedSignupDto = SignupDto.builder()
-                .userId(signupDto.getUserId())
-                .userName(signupDto.getUserName())
-                .userPw(passwordEncoder.encode(signupDto.getUserPw()))
-                .build();
-        System.out.println(encodedSignupDto.getUserPw()+" / "+signupDto.getUserPw());
+        memberService.signup(signupDto);
         return "redirect:/member/login";
     }
 
