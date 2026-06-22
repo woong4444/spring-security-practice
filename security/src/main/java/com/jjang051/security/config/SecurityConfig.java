@@ -25,11 +25,12 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
+                .csrf(csrf->csrf.disable())
                 .formLogin(form->
                         form
                                 .loginPage("/member/login")          //get
                                 .loginProcessingUrl("/member/login") //post
-                                .defaultSuccessUrl("/")
+                                .defaultSuccessUrl("/",true)
                                 .usernameParameter("userId")
                                 .passwordParameter("userPw")
                                 .failureUrl("/member/login?error=true")
