@@ -1,9 +1,12 @@
 package com.jjang051.security.member.controller;
 
 import com.jjang051.security.member.dao.MemberDao;
+import com.jjang051.security.member.dto.CustomUserDetails;
 import com.jjang051.security.member.dto.SignupDto;
 import com.jjang051.security.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -41,6 +44,19 @@ public class MemberController {
     @GetMapping("/login")
     public String login() {
         return "member/login";
+    }
+
+    @GetMapping("/info")
+    public String info(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        model.addAttribute("loggedMember", customUserDetails.getMemberDto());
+        return "member/info";
+    }
+    @GetMapping("/info02")
+    public String info(Authentication authentication, Model model) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        System.out.println(authentication);
+        model.addAttribute("loggedMember", authentication.getPrincipal());
+        return "member/info";
     }
 
 //    @PostMapping("/logout")
