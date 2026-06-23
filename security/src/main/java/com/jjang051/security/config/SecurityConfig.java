@@ -19,6 +19,7 @@ public class SecurityConfig {
                                                 "/main",
                                                 "/member/login",
                                                 "/member/signup",
+                                                "/board/**",
                                                 "/css/**",
                                                 "/js/**"
                                 ).permitAll()
@@ -30,7 +31,7 @@ public class SecurityConfig {
                         form
                                 .loginPage("/member/login")          //get
                                 .loginProcessingUrl("/member/login") //post
-                                .defaultSuccessUrl("/",true)
+                                .defaultSuccessUrl("/")
                                 .usernameParameter("userId")
                                 .passwordParameter("userPw")
                                 .failureUrl("/member/login?error=true")

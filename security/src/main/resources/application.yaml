@@ -22,8 +22,12 @@ spring:
       name: admin
       password: 1234
       # roles:  ADMIN
+  data:
+    redis:
+      host: localhost
+      port: 6379
 mybatis:
   mapper-locations:  classpath:/mapper/**/*.xml
-  type-aliases-package: com.jjang051.security.member.dto
+  type-aliases-package: com.jjang051.security.member.dto,com.jjang051.security.board.dto
   configuration:
     map-underscore-to-camel-case: true

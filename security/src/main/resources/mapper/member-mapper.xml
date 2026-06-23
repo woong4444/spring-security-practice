@@ -12,6 +12,9 @@
         sysdate
         )
     </insert>
-
+    <select id="findByUserId" parameterType="String">
+        SELECT * FROM security_member
+        WHERE user_id = #{userId}
+    </select>
 </mapper>
 

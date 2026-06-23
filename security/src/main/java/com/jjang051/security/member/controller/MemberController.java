@@ -37,4 +37,12 @@ public class MemberController {
     public String modify() {
         return "member/modify";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "member/login";
+    }
+
+
+
 }

@@ -8,7 +8,7 @@ CREATE TABLE security_member (
                                  REGDATE DATE DEFAULT sysdate
 );
 DROP TABLE security_member;
-CREATE SEQUENCE seq_sequrity_member
+CREATE SEQUENCE seq_security_member
     START WITH 1
     INCREMENT BY 1
     nocache

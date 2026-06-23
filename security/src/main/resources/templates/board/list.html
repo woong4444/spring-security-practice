@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록</title>
+
+    <style>
+        table{
+            width:900px;
+            border-collapse: collapse;
+        }
+
+        th,td{
+            border:1px solid #ddd;
+            padding:10px;
+            text-align:center;
+        }
+
+        th{
+            background:#f4f4f4;
+        }
+
+        td.title{
+            text-align:left;
+        }
+
+        a{
+            text-decoration:none;
+            color:black;
+        }
+
+        a:hover{
+            color:blue;
+        }
+    </style>
+</head>
+<body>
+
+<h1>게시글 목록</h1>
+
+<div style="margin-bottom:15px;">
+    <a href="/board/write">글쓰기</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th width="80">번호</th>
+        <th>제목</th>
+        <th width="120">조회수</th>
+        <th width="180">작성일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="board : ${boardList}">
+        <td th:text="${board.no}"></td>
+
+        <td class="title">
+            <a th:href="@{/board/view(no=${board.no})}"
+               th:text="${board.title}"></a>
+        </td>
+
+        <td th:text="${board.hit}"></td>
+
+        <td th:text="${#temporals.format(board.regDate,'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+
+    <tr th:if="${#lists.isEmpty(boardList)}">
+        <td colspan="4">
+            등록된 게시글이 없습니다.
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+</body>
+</html>

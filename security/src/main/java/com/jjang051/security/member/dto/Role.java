@@ -2,5 +2,5 @@ package com.jjang051.security.member.dto;
 
 public enum Role {
     ROLE_ADMIN,
-    ROLE_MEMBER;
+    ROLE_USER;
 }
