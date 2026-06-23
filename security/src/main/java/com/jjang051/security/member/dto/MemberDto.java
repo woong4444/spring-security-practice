@@ -13,5 +13,5 @@ public class MemberDto {
     private int no;
     private String userPw;
     private LocalDateTime regDate;
-    private String role;
+    private Role role;
 }

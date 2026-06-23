@@ -6,8 +6,8 @@
     <insert id="signup" parameterType="SignupDto">
         INSERT INTO security_member values(seq_sequrity_member.nextval,
         #{userId},
-        #{userName},
         #{userPw},
+        #{userName},
         'ROLE_USER',
         sysdate
         )

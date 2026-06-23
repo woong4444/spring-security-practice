@@ -31,7 +31,7 @@ public class SecurityConfig {
                         form
                                 .loginPage("/member/login")          //get
                                 .loginProcessingUrl("/member/login") //post
-                                .defaultSuccessUrl("/")
+                                .defaultSuccessUrl("/",true)
                                 .usernameParameter("userId")
                                 .passwordParameter("userPw")
                                 .failureUrl("/member/login?error=true")
