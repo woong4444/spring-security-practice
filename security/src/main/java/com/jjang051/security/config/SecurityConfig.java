@@ -19,6 +19,8 @@ public class SecurityConfig {
                                                 "/main",
                                                 "/member/login",
                                                 "/member/signup",
+                                                "/mail/**",
+                                                "/redis/**",
                                                 "/board/**",
                                                 "/css/**",
                                                 "/js/**"
