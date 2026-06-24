@@ -3,7 +3,9 @@ package com.jjang051.security.member.controller;
 import com.jjang051.security.member.dao.MemberDao;
 import com.jjang051.security.member.dto.CustomUserDetails;
 import com.jjang051.security.member.dto.SignupDto;
+import com.jjang051.security.member.service.MailService;
 import com.jjang051.security.member.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +23,7 @@ public class MemberController {
 
 
     private final MemberService memberService;
+    private final MailService mailService;
 
     @GetMapping("/signup")
     public String signup() {
@@ -57,6 +60,37 @@ public class MemberController {
         System.out.println(authentication);
         model.addAttribute("loggedMember", authentication.getPrincipal());
         return "member/info";
+    }
+    @GetMapping("/find-password")
+    public String findPassword() {
+        return "member/find-password";
+    }
+    @GetMapping("/reset-password")
+    public String resetPassword() {
+        return "member/reset-password";
+    }
+    @PostMapping("/reset-password")
+    public String resetPasswordProcess(@RequestParam String newPassword, HttpSession session) {
+        String email = (String) session.getAttribute("resetEmail");
+        memberService.updatePassword(email , newPassword);
+        return "redirect:/member/login";
+    }
+    @PostMapping("/find-password/send")
+    @ResponseBody
+    public String send(@RequestParam String email) throws Exception {
+        System.out.println("email==="+email);
+        mailService.sendResetPasswordCode(email);
+        return "인증번호를 발송했습니다.";
+    }
+    @PostMapping("/find-password/verify")
+    @ResponseBody
+    public String verify(@RequestParam String email, @RequestParam String code, HttpSession session) {
+        boolean result = mailService.verifiedAuthCode(email,code);
+        if(result){
+            session.setAttribute("resetEmail",email);
+            return "인증 완료";
+        }
+        return "인증 실패";
     }
 
 //    @PostMapping("/logout")

@@ -4,10 +4,11 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jjang051.security.member.dao.MemberDao">
     <insert id="signup" parameterType="SignupDto">
-        INSERT INTO security_member values(seq_sequrity_member.nextval,
+        INSERT INTO security_member values(seq_security_member.nextval,
         #{userId},
         #{userPw},
         #{userName},
+        #{userEmail},
         'ROLE_USER',
         sysdate
         )
@@ -16,5 +17,8 @@
         SELECT * FROM security_member
         WHERE user_id = #{userId}
     </select>
+    <update id="updatePassword">
+        UPDATE security_member SET user_pw = #{userPw} WHERE user_email=#{userEmail}
+    </update>
 </mapper>
 

@@ -16,19 +16,29 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers(
                                         "/",
-                                                "/main",
-                                                "/member/login",
-                                                "/member/signup",
-                                                "/mail/**",
-                                                "/redis/**",
-                                                "/board/**",
-                                                "/css/**",
-                                                "/js/**"
+                                        "/main",
+                                        "/member/login",
+                                        "/member/signup",
+                                        "/member/find-password",
+                                        "/member/reset-password",
+                                        "/member/find-password/send",
+                                        "/member/find-password/verify",
+                                        "/mail/**",
+                                        "/redis/**",
+                                        "/board/**",
+                                        "/css/**",
+                                        "/js/**"
                                 ).permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 //.csrf(csrf->csrf.disable())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(
+                                "/mail/**",
+                                "/member/find-password/send",
+                                "/member/find-password/verify")
+                )
                 .formLogin(form->
                         form
                                 .loginPage("/member/login")          //get
@@ -37,7 +47,7 @@ public class SecurityConfig {
                                 .usernameParameter("userId")
                                 .passwordParameter("userPw")
                                 .failureUrl("/member/login?error=true")
-                        .permitAll()
+                                .permitAll()
                 )
                 .logout(logout ->
                         logout
