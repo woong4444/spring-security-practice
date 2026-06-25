@@ -2,78 +2,81 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 목록</title>
+    <title>게시판 목록</title>
 
-    <style>
-        table{
-            width:900px;
-            border-collapse: collapse;
-        }
-
-        th,td{
-            border:1px solid #ddd;
-            padding:10px;
-            text-align:center;
-        }
-
-        th{
-            background:#f4f4f4;
-        }
-
-        td.title{
-            text-align:left;
-        }
-
-        a{
-            text-decoration:none;
-            color:black;
-        }
-
-        a:hover{
-            color:blue;
-        }
-    </style>
+    <!-- DaisyUI + Tailwind -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
 
-<h1>게시글 목록</h1>
+<body class="min-h-screen bg-base-200 flex flex-col">
 
-<div style="margin-bottom:15px;">
-    <a href="/board/write">글쓰기</a>
-</div>
+<!-- HEADER -->
+<th:block th:replace="~{fragments/header :: header}"></th:block>
 
-<table>
-    <thead>
-    <tr>
-        <th width="80">번호</th>
-        <th>제목</th>
-        <th width="120">조회수</th>
-        <th width="180">작성일</th>
-    </tr>
-    </thead>
+<!-- MAIN -->
+<main class="flex-1 max-w-6xl w-full mx-auto px-4 py-10">
 
-    <tbody>
-    <tr th:each="board : ${boardList}">
-        <td th:text="${board.no}"></td>
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">게시판</h1>
 
-        <td class="title">
-            <a th:href="@{/board/view(no=${board.no})}"
-               th:text="${board.title}"></a>
-        </td>
+        <a href="/board/write" th:href="@{/board/write}" class="btn btn-primary">
+            글쓰기
+        </a>
+    </div>
 
-        <td th:text="${board.hit}"></td>
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
 
-        <td th:text="${#temporals.format(board.regDate,'yyyy-MM-dd HH:mm')}"></td>
-    </tr>
+            <div class="overflow-x-auto">
+                <table class="table table-zebra w-full">
+                    <thead>
+                    <tr>
+                        <th class="w-20">번호</th>
+                        <th>제목</th>
+                        <th class="w-40">작성자</th>
+                        <th class="w-24">조회수</th>
+                        <th class="w-48">작성일</th>
+                    </tr>
+                    </thead>
 
-    <tr th:if="${#lists.isEmpty(boardList)}">
-        <td colspan="4">
-            등록된 게시글이 없습니다.
-        </td>
-    </tr>
-    </tbody>
+                    <tbody>
+                    <tr th:each="board : ${boardList}">
+                        <td th:text="${board.no}">1</td>
 
-</table>
+                        <td>
+                            <a class="link link-hover font-semibold"
+                               th:href="@{/board/view(no=${board.no})}"
+                               th:text="${board.title}">
+                                제목입니다
+                            </a>
+                        </td>
+
+                        <td th:text="${board.author}">작성자</td>
+
+                        <td th:text="${board.hit}">0</td>
+
+                        <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm')}">
+                            2026-06-25 10:00
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(boardList)}">
+                        <td colspan="5" class="text-center py-10 text-gray-400">
+                            등록된 게시글이 없습니다.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 
 </body>
 </html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jjang051.security.board.dao.BoardDao">
+    <insert id="write" parameterType="BoardDto">
+        INSERT INTO security_board values(seq_security_board.nextval,
+        #{title},
+        #{content},
+        #{author},
+        #{hit},
+        #{regDate}
+        )
+    </insert>
+    <select id="findAll">
+        SELECT * FROM security_board
+    </select>
+    <select id="findByNo" parameterType="int" resultType="BoardDto">
+        SELECT * FROM security_board
+        WHERE no = #{no}
+    </select>
+
+    <update id="increaseHit" parameterType="int">
+        UPDATE security_board
+        SET hit = hit + 1
+        WHERE no = #{no}
+    </update>
+</mapper>

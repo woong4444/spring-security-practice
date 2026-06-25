@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jjang051.security.board.dao.BoardLikeDao">
+    <insert id="insertLike">
+        INSERT INTO security_board_like VALUES (
+        seq_security_board_like.nextval,
+        #{boardNo},
+        #{userId},
+        sysdate
+        )
+    </insert>
+    <select id="likeCount" parameterType="int" resultType="int">
+        SELECT count(*) AS count FROM security_board_like WHERE board_no = #{no}
+    </select>
+</mapper>
