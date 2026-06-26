@@ -3,13 +3,13 @@ package com.jjang051.security.board.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
-public interface BoardLikeDao {
+public interface BoardLikeRedisDao {
     int insertLike(@Param("boardNo") int boardNo,
                    @Param("userId") String userId);
-    int likeCount(int boardNo);
-
     int deleteLike(@Param("boardNo") int boardNo, @Param("userId") String userId);
 
-    int existLike(@Param("boardNo") int boardNo, @Param("userId") String userId);
+    List<String> findLikeUsersByBoardNo(int boardNo);
 }

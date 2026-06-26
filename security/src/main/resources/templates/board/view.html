@@ -57,7 +57,7 @@
                         data-like = "hello"
                         data-link = "http://www.daum.bet"
                         th:data-no="${boardDto.no}">
-                    ❤️ 좋아요
+                    ❤️ <span id="like-text" th:text="${liked} ?'싫어요':'좋아요'">좋아요</span>
                     <span class="badge badge-error"
                           id="likeCount"
                           th:text="${likeCount}"
@@ -107,9 +107,11 @@
 
 <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 <script>
+    //id class이름 - 를 많이 쓴다.  like-text
     //const boardNo =  ${boardDto.content}
     const btnLike =  document.querySelector("#likeBtn");
     const likeCount =  document.querySelector("#likeCount");
+    const likeText =  document.querySelector("#like-text");
     btnLike.addEventListener("click",async (e)=>{
         const no = btnLike.dataset.no;
         const response = await fetch("/board/like",{
@@ -122,7 +124,13 @@
         const result = await response.json();
         if(result.message==="success") {
             likeCount.textContent =  result.likeCount;
-            alert("좋아요 성공");
+            console.log(result.liked);
+            if(result.liked) {
+                likeText.textContent="좋아요 취소";
+            } else {
+                likeText.textContent="좋아요";
+            }
+            //alert("좋아요 성공");
         }
 
     })
