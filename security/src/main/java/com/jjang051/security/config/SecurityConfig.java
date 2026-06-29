@@ -24,7 +24,10 @@ public class SecurityConfig {
                                         "/member/find-password/send",
                                         "/member/find-password/verify",
                                         "/mail/**",
+                                        "/map/**",
+                                        "/map/ev-car",
                                         "/redis/**",
+                                        "/images/**",
                                         "/css/**",
                                         "/js/**"
                                 ).permitAll()

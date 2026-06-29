@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .map-container {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+
+        #map {
+            width: 100vw;
+            height: 500px;
+        }
+
+        .wrap {
+            position: absolute;
+            left: 0;
+            bottom: 40px;
+            width: 328px;              /* 288 -> 328 */
+            height: 152px;             /* 132 -> 152 */
+            margin-left: -164px;       /* width의 절반 */
+            text-align: left;
+            overflow: hidden;
+            font-size: 12px;
+            font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+            line-height: 1.5;
+        }
+
+        .wrap * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrap .info {
+            position: relative;
+            width: 326px;              /* 286 -> 326 */
+            height: 140px;             /* 120 -> 140 */
+            border-radius: 5px;
+            border-bottom: 2px solid #ccc;
+            border-right: 1px solid #ccc;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .wrap .info:nth-child(1) {
+            border: 0;
+            box-shadow: 0 1px 2px #888;
+        }
+
+        .info .title {
+            padding: 8px 0 0 10px;
+            height: 36px;              /* 30 -> 36 */
+            line-height: 28px;
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .info .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 17px;
+            height: 17px;
+            color: #888;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+        }
+
+        .info .close:hover {
+            cursor: pointer;
+        }
+
+        .info .body {
+            position: relative;
+            overflow: hidden;
+            height: 104px;
+        }
+
+        .info .img {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 73px;
+            height: 71px;
+            border: 1px solid #ddd;
+            color: #888;
+            overflow: hidden;
+        }
+
+        .info .img img {
+            width: 73px;
+            height: 71px;
+        }
+
+        .info .desc {
+            position: relative;
+            margin: 10px 0 0 92px;
+            height: 95px;
+        }
+
+        .desc .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 3px;
+        }
+
+        .desc .jibun {
+            font-size: 11px;
+            color: #888;
+            margin-top: -2px;
+        }
+
+        .info:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            margin-left: -12px;
+            width: 22px;
+            height: 12px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+        }
+
+        .info .link {
+            color: #5085BB;
+            text-decoration: none;
+        }
+
+        .info .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1601cd1d108739b235353d7be0cc466f&libraries=services,clusterer"></script>
+</head>
+<body>
+<div class="map-container">
+    <div id="map">
+
+    </div>
+</div>ffffff
+<script>
+    const map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+        center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
+        level : 14 // 지도의 확대 레벨
+    });
+    const arrayChargeTp = ["완속","급속"];
+    const arraycpStat = ["충전가능","충전중","고장/점검","통신장애" ,"통신미연결","충전종료","계획정지"];
+    function makeContent(item) {
+        return `<div class="wrap">
+                    <div class="info">
+                        <div class="title">
+                            ${item.csNm}
+                            <div class="close" onclick="closeOverlay()" title="닫기"></div>
+                        </div>
+                        <div class="body">
+                            <div class="img">
+                                <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">
+                           </div>
+                            <div class="desc">
+                                <div class="ellipsis">주소 : ${item.addr}</div>
+                                <div class="ellipsis">충전기 타입 : ${arrayChargeTp[item.chargeTp-1]}</div>
+                                <div class="ellipsis">충전기 상태 : ${arraycpStat[item.cpStat-1]}</div>
+                                <div class="ellipsis">충전 방식 : ${item.cpTp}</div>
+                                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+    }
+
+    // 마커 위에 커스텀오버레이를 표시합니다
+    // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+    const overlay = new kakao.maps.CustomOverlay({
+        content: "",
+        map: map,
+    });
+
+    // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다
+    function closeOverlay() {
+        overlay.setMap(null);
+    }
+    async function  loadEvCar () {
+        const evCar = await fetch("/map/ev-car")
+        const json = await evCar.json()
+        console.log(json);
+        // 마커 클러스터러를 생성합니다
+        const clusterer = new kakao.maps.MarkerClusterer({
+            map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+            averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+            minLevel: 10 // 클러스터 할 최소 지도 레벨
+        });
+        const markers = json.data.map(function(item, i) {
+            const marker =  new kakao.maps.Marker({
+                position : new kakao.maps.LatLng(item.lat, item.longi)
+            });
+            kakao.maps.event.addListener(marker,"click",()=>{
+
+                const content =  makeContent(item);
+                console.log(content);
+                overlay.setContent(content);
+                overlay.setPosition(marker.getPosition())
+                overlay.setMap(map);
+            })
+            return marker;
+        });
+        // 클러스터러에 마커들을 추가합니다
+        clusterer.addMarkers(markers);
+    }
+    loadEvCar();
+</script>
+</body>
+</html>
